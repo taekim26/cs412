@@ -1,0 +1,25 @@
+<!-- quotes/templates/quotes/base.html -->
+
+{% load static %}
+
+<html>
+    <head>
+        <title>Quotes of Charles Darwin</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'quote' %}">Quote</a></li>
+            <li><a href="{% url 'show_all' %}">Show All</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+        </nav>
+
+        <!-- page specific contents go here -->
+         {% block content %}
+         {% endblock %}
+
+         <footer>
+            <p>CS412 Assignment 1 Tae Yeung Kim</p>
+         </footer>
+    </body>
+</html>
