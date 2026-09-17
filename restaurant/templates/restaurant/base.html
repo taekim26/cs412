@@ -1,0 +1,21 @@
+<!-- restaurant/templates/restaurant/base.html -->
+ {% load static %}
+
+ <html>
+    <head>
+        <title>Chicha San Chen Tea Shop</title>
+        <link rel="stylesheet" href="{% static 'sytles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'main' %}">Main Page</a></li>
+            <li><a href="{% url 'order' %}">Order Here</a></li>
+        </nav>
+        <!-- page specific contents go here -->
+        {% block content %}
+        {% endblock %}
+        <footer>
+            <p>CS412 Assignment 2 Tae Yeung Kim</p>
+        </footer>
+    </body>
+ </html>

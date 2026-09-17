@@ -1,0 +1,57 @@
+<!-- restaurant/templates/restaurant/order.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h1>Place Your Order</h1>
+<form action="{% url 'confirmation' %}" method="POST">
+    {% csrf_token %}
+    <h2>Menu</h2>
+    <!-- item 1 -->
+     <p>
+        <input type="checkbox" name="item1"> Taro Green Milk Tea - $12
+     </p>
+     <p>
+        Sugar Level:
+        <input type="radio" name="sugar_level" value="0%"> 0%
+        <input type="radio" name="sugar_level" value="50%"> 50%
+        <input type="radio" name="sugar_level" value="100%" checked> 100%
+     </p>
+     <p>
+        Add Boba:
+        <input type="radio" name="add_boba" value="Yes"> Yes
+        <input type="radio" name="add_boba" value="No"> No
+     </p>
+
+     <!-- item 2 -->
+     <p>
+        <input type="checkbox" name="item2"> Taro Fresh Milk - $12
+     </p>
+
+     <!-- item 3 -->
+     <p>
+        <input type="checkbox" name="item3"> Green Tea with Honey - $15
+     </p>
+
+     <!-- item 4 -->
+     <p>
+        <input type="checkbox" name="item4"> Green Tea with Cream - $18
+     </p>
+     
+     <!-- special item -->
+      <p>
+        <input type="checkbox" name="special_item" value="{{ special_item }}">
+        Today's Special: {{ special_item }} - $20
+      </p>
+      <h2>Special Instruction</h2>
+      <p>
+        Please enter any special instructions: <input type="text" name="instructions">
+      </p>
+      <h2>Customer Information</h2>
+      <p>
+        Name: <input type="text" name="name">
+        Phone: <input type="text" name="phone">
+        Email: <input type="text" name="email">
+      </p>
+      <input type="submit" value="Place Order">
+</form>
+{% endblock %}
