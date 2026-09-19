@@ -51,10 +51,34 @@ def confirmation(request):
     if request.POST:
         # extract order fields into variables for context dict
         # customer information & instructions
-        name = request.POST['name']
-        phone = request.POST['phone']
-        email = request.POST['email']
+        name = request.POST.get('name', '')
+        phone = request.POST.get('phone', '')
+        email = request.POST.get('email', '')
         instructions = request.POST['instructions']
+
+        # prompt an error message if any of the necessary customer info is missing
+        # will stay at the current order page
+        if ((name == '') or (phone == '') or (email == '')):
+            context = {
+                "error": "Please enter your name, phone, and email information!",
+                "special_item": request.POST.get('special_item', random.choice(special_items))
+            }
+            return render(request, 'restaurant/order.html', context)
+
+        # prompt an error message if no order has been made
+        # will stay at the current order page
+        item_names = ['item1', 'item2', 'item3', 'item4', 'special_item']
+        item_selected = False
+        for item in item_names:
+            if item in request.POST:
+                item_selected = True
+
+        if item_selected == False:
+            context = {
+                "error": "Please select at least one item and press place order!",
+                "special_item": request.POST.get('special_item', random.choice(special_items))
+            }
+            return render(request, 'restaurant/order.html', context)
 
         # ordered items list
         ordered_items = []
@@ -121,4 +145,3 @@ def confirmation(request):
         }
 
         return render(request, template_name, context)
-

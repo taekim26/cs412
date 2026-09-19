@@ -3,6 +3,11 @@
 
 {% block content %}
 <h1>Place Your Order</h1>
+
+{% if error %}
+   <p><em>Error: {{ error }}</em></p>
+{% endif %}
+
 <form action="{% url 'confirmation' %}" method="POST">
     {% csrf_token %}
     <h2>Menu</h2>
