@@ -1,5 +1,6 @@
-# restaurant/urls.py
-# URL patterns for the restaurant app
+# File: restaurant/urls.py
+# Author: Tae Yeung Kim (kimty@bu.edu), 09/23/2026
+# Description: URL patterns for the restaurant app
 
 from django.urls import path
 from django.conf import settings

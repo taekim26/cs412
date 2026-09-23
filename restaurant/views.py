@@ -1,5 +1,7 @@
-# restaurant/views.py
-# view functions to handle URL requests
+# File: restaurant/views.py
+# Author: Tae Yeung Kim (kimty@bu.edu), 09/23/2026
+# Description: view functions to handle URL requests
+
 from django.shortcuts import render
 from django.http import HttpResponse
 import random
