@@ -25,7 +25,7 @@ normal_items = [
     "Green Tea with Cream",
 ]
 
-# Create your views here.
+# views for restaurant app
 def main(request):
     '''Shows the main page to the user'''
     template_name = 'restaurant/main.html'
