@@ -25,12 +25,18 @@ normal_items = [
     "Green Tea with Cream",
 ]
 
+# restaurant logo image url
+logoURL = "https://www.chichasanchen.com/en/images/footer_logo_02.png"
+
 # views for restaurant app
 def main(request):
     '''Shows the main page to the user'''
     template_name = 'restaurant/main.html'
+    context = {
+        "image": logoURL,
+    }
 
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 def order(request):
     '''Creates a daily special item'''
