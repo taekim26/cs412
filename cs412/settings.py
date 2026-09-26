@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "quotes",   # pa1: quotes app
     "formdata", # form data app
     "restaurant", # pa2: restaurant app
+    "blog", # blog app
 ]
 
 MIDDLEWARE = [
