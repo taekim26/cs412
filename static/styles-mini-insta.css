@@ -1,0 +1,325 @@
+/* This CSS was derived from styles-blog example from CS412 lecture. */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: white;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+
+    /* space so content does not hide behind fixed footer */
+    padding-bottom: 110px;
+}
+
+
+/* ---------- HEADER ---------- */
+
+header {
+    background: #f4f4f4;
+    padding: 10px 20px;
+
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 48px;
+    color: black;
+}
+
+
+/* ---------- PAGE TITLE ---------- */
+
+.page-title {
+    margin: 10px 20px;
+    font-size: 48px;
+    color: black;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 90px;
+
+    background: #f4f4f4;
+    border-top: 1px solid #dddddd;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    align-items: center;
+
+    padding: 10px 20px;
+
+    z-index: 1000;
+}
+
+
+/* ---------- ALL PROFILES PAGE ---------- */
+
+.grid-container {
+    display: grid;
+
+    /* 4 profiles per row */
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    max-width: 1200px;
+
+    /* space between title and profiles */
+    margin: 40px auto;
+
+    padding: 20px;
+}
+
+
+/* individual profile */
+
+.profile-card {
+    text-align: center;
+}
+
+
+/* profile image */
+
+.profile-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+
+    border-radius: 10px;
+    display: block;
+}
+
+
+/* display name */
+
+.profile-card h2 {
+    color: black;
+    font-size: 24px;
+
+    margin: 10px 0 4px;
+}
+
+
+/* username */
+
+.profile-card p {
+    color: #666;
+    font-size: 18px;
+
+    margin: 0;
+}
+
+
+/* profile links */
+
+.profile-card a {
+    color: black;
+    text-decoration: none;
+}
+
+
+/* ---------- PROFILE PAGE ---------- */
+
+.profile {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+/* profile display name */
+
+.profile h2 {
+    text-align: center;
+    font-size: 46px;
+
+    margin: 0 0 20px;
+}
+
+
+/* top profile information */
+
+.profile-info {
+    display: flex;
+    align-items: center;
+
+    gap: 60px;
+    margin-bottom: 30px;
+}
+
+
+/* circular profile picture */
+
+.profile-picture {
+    width: 220px;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+    border: 3px solid #b84cff;
+}
+
+
+/* ---------- STATS ---------- */
+
+.stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat {
+    width: 210px;
+    min-height: 200px;
+
+    padding: 25px;
+
+    background: #f5f3ff;
+
+    border-left: 6px solid #b84cff;
+    border-radius: 10px;
+
+    font-size: 30px;
+}
+
+.stat strong {
+    display: block;
+
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+
+/* ---------- BIO ---------- */
+
+.bio {
+    font-size: 30px;
+    line-height: 1.6;
+
+    margin: 20px 0;
+}
+
+.bio p {
+    margin: 8px 0;
+}
+
+
+/* ---------- POSTS ---------- */
+
+.posts h2 {
+    text-align: left;
+    font-size: 42px;
+}
+
+.no-posts {
+    font-size: 42px;
+    font-weight: bold;
+}
+
+
+/* ---------- NAVIGATION ---------- */
+
+/* navigation will be added later */
+
+nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 110px;
+
+    background: #f4f4f4;
+
+    border-top: 1px solid #dddddd;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+    padding: 10px 20px;
+
+    z-index: 1000;
+}
+
+
+nav img {
+    width: 75px;
+    height: 75px;
+
+    object-fit: cover;
+}
+
+
+nav .profile-icon {
+    border-radius: 50%;
+    border: 3px solid #b84cff;
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+
+/* tablets: 2 profiles per row */
+
+@media screen and (max-width: 900px) {
+
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 30px;
+    }
+
+    .profile-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+/* phones: 1 profile per row */
+
+@media screen and (max-width: 600px) {
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    .page-title {
+        font-size: 32px;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+        margin-top: 20px;
+    }
+
+    .profile-picture {
+        width: 160px;
+        height: 160px;
+    }
+
+    .bio {
+        font-size: 22px;
+    }
+
+    .stat {
+        width: 100%;
+    }
+}

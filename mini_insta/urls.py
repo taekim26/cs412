@@ -3,8 +3,8 @@
 # Description: URL patterns for the mini_insta application
 
 from django.urls import path
-# from .views import ShowAllView, ArticleView, RandomArticleView
+from .views import ProfileListView
 
 urlpatterns = [
-    # path('', view, name="random"),
+    path('', ProfileListView.as_view(), name="show_all_profiles"),
 ]

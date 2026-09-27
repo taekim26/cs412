@@ -1,0 +1,26 @@
+<!-- mini_insta/templates/mini_insta/base.html -->
+<!-- file: base.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 09/26/2026 -->
+<!-- description: base html for the overall structure of the templates -->
+
+{% load static %}
+
+<html>
+    <head>
+        <title>Mini Insta</title>
+        <link rel="stylesheet" href="{% static 'styles-mini-insta.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>Mini Insta</h1>
+        </header>
+
+        <!-- page specific contents go here -->
+        {% block content %}
+        {% endblock %}
+        
+        <footer>
+            CS412 Assignment 3 Tae Yeung Kim
+        </footer>
+    </body>
+</html>
