@@ -1,0 +1,47 @@
+<!-- mini_insta/templates/mini_insta/show_profile.html -->
+<!-- file: show_profile.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 09/26/2026 -->
+<!-- description: list single selected profile -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1 class="profile-username">@{{ profile.username }}</h1>
+
+<main class="profile">
+    <h2>{{ profile.display_name }}</h2>
+
+    <div class="profile-info">
+        <img class="profile-picture"
+            src="{{ profile.profile_image_url }}"
+            alt="{{ profile.display_name }}"
+        >
+        
+        <div class="stats">
+            <div class="stat">
+                <strong>TBD</strong>
+                <p>posts</p>
+            </div>
+
+            <div class="stat">
+                <strong>TBD</strong>
+                <p>followers</p>
+            </div>
+
+            <div class="stat">
+                <strong>TBD</strong>
+                <p>following</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bio">
+        <p>{{ profile.bio_text }}</p>
+    </div>
+
+    <div class="posts">
+        <h2>Posts</h2>
+        <p class="no-posts">No Posts</p>
+    </div>
+</main>
+{% endblock %}
