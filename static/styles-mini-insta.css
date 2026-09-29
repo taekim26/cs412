@@ -1,4 +1,6 @@
-/* This CSS was derived from styles-blog example from CS412 lecture. */
+/* File: mini_insta/models.py */
+/* Author: Tae Yeung Kim (kimty@bu.edu), 09/26/2026 */
+/* Description: CSS for mini-insta application; this CSS was derived from styles-blog example from CS412 lecture */
 
 * {
     box-sizing: border-box;
