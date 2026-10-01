@@ -9,7 +9,7 @@
 <main class="create-post">
     <h1>Create a Post</h1>
 
-    <form action="{% url 'create_post' profile.pk %}" method="POST">
+    <form action="{% url 'create_post' profile.pk %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             <tr>
@@ -17,8 +17,8 @@
                 <td>{{ form.caption }}</td>
             </tr>
             <tr>
-                <td>Image URL:</td>
-                <td><input type="url" name="image_url"></td>
+                <td>Images:</td>
+                <td><input type="file" name="files" multiple></td>
             </tr>
             <tr>
                 <td>
