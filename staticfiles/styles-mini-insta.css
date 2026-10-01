@@ -1,4 +1,6 @@
-/* This CSS was derived from styles-blog example from CS412 lecture. */
+/* File: static/styles-mini-insta.css */
+/* Author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026 */
+/* Description: CSS for mini-insta application; this CSS was derived from styles-blog example from CS412 lecture */
 
 * {
     box-sizing: border-box;
@@ -299,7 +301,7 @@ footer {
 
 
 /* ==================================================
-   POSTS
+   POSTS (profile page)
    ================================================== */
 
 .posts {
@@ -312,13 +314,115 @@ footer {
 
     font-size: 42px;
 
-    margin: 0 0 60px;
+    margin: 0 0 30px;
+}
+
+
+/* three posts per row */
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* every post is a square box */
+
+.post {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+
+.post a {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* every photo fills the square (extra part is cropped) */
+
+.post img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
 }
 
 
 .no-posts {
     font-size: 42px;
     font-weight: bold;
+
+    margin: 0;
+}
+
+
+/* ==================================================
+   SINGLE POST PAGE
+   ================================================== */
+
+/* same 30px left edge as the "Showing All Profiles" title */
+
+.post-detail {
+    padding: 20px 30px;
+}
+
+
+/* @username link */
+
+.post-detail h2 {
+    margin: 0 0 20px;
+
+    font-size: 36px;
+}
+
+
+/* three photos per row */
+
+.post-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* every photo is a square */
+
+.post-photos img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* caption and timestamp */
+
+.post-info {
+    margin-top: 30px;
+}
+
+
+.caption {
+    font-size: 24px;
+
+    margin: 0 0 10px;
+}
+
+
+.timestamp {
+    font-size: 18px;
+    color: #666;
 
     margin: 0;
 }
@@ -366,133 +470,4 @@ nav img {
 nav .profile-icon {
     border-radius: 50%;
     border: 3px solid #b84cff;
-}
-
-
-/* ==================================================
-   RESPONSIVE
-   ================================================== */
-
-
-/* ---------- TABLETS ---------- */
-
-@media screen and (max-width: 900px) {
-
-    /* all profiles: 2 per row */
-
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr);
-
-        margin-top: 30px;
-    }
-
-
-    /* single profile */
-
-    .profile > h2 {
-        text-align: center;
-
-        margin: 20px 0 30px;
-    }
-
-
-    .profile-info {
-        flex-direction: column;
-
-        gap: 20px;
-    }
-
-
-    .stats {
-        flex-wrap: wrap;
-
-        justify-content: center;
-    }
-}
-
-
-/* ---------- PHONES ---------- */
-
-@media screen and (max-width: 600px) {
-
-    /* header */
-
-    header h1 {
-        font-size: 32px;
-    }
-
-
-    /* Showing All Profiles */
-
-    .page-title {
-        font-size: 32px;
-    }
-
-
-    /* @username */
-
-    .profile-username {
-        font-size: 32px;
-    }
-
-
-    /* all profiles: 1 per row */
-
-    .grid-container {
-        grid-template-columns: 1fr;
-
-        margin-top: 20px;
-    }
-
-
-    /* profile display name */
-
-    .profile > h2 {
-        font-size: 36px;
-
-        text-align: center;
-
-        margin: 20px 0;
-    }
-
-
-    /* profile picture */
-
-    .profile-picture {
-        width: 160px;
-        height: 160px;
-    }
-
-
-    /* stats */
-
-    .stats {
-        width: 100%;
-    }
-
-
-    .stat {
-        width: 100%;
-
-        min-height: auto;
-    }
-
-
-    /* bio */
-
-    .bio {
-        font-size: 22px;
-    }
-
-
-    /* posts */
-
-    .posts h2 {
-        font-size: 32px;
-    }
-
-
-    .no-posts {
-        font-size: 32px;
-    }
 }
