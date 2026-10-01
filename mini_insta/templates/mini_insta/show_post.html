@@ -1,0 +1,25 @@
+<!-- mini_insta/templates/mini_insta/show_post.html -->
+<!-- file: show_post.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026 -->
+<!-- description: shows a single post with its caption, timestamp, and photos -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main class="post-detail">
+    <h2>
+        <a href="{% url 'show_profile' post.profile.pk %}">@{{ post.profile.username }}</a>
+    </h2>
+
+    <div class="post-photos">
+        {% for photo in post.get_all_photos %}
+            <img src="{{ photo.image_url }}" alt="{{ post.caption }}">
+        {% endfor %}
+    </div>
+
+    <div class="post-info">
+        <p class="caption"><strong>@{{ post.profile.username }}</strong> {{ post.caption }}</p>
+        <p class="timestamp">{{ post.timestamp }}</p>
+    </div>
+</main>
+{% endblock %}

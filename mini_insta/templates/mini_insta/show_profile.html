@@ -41,15 +41,19 @@
 
     <div class="posts">
         <h2>Posts</h2>
-        {% for post in profile.get_all_posts %}
-            <div class="post">
-            {% if post.get_all_photos %}
-                <img src="{{ post.get_all_photos.first.image_url }}" alt="{{ post.caption }}">
-            {% else %}
-                <img src="{{ https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGIPsaM2kE0VHTFdEAdWEut7ssmNHGXJpz_2cNxCISBg&s=10 }}" alt="No image">
-            {% endif %}
-            </div>
-        {% endfor %}
+        <div class="posts-grid">
+            {% for post in profile.get_all_posts %}
+                <div class="post">
+                    <a href="{% url 'show_post' post.pk %}">
+                        {% if post.get_all_photos %}
+                            <img src="{{ post.get_all_photos.first.image_url }}" alt="{{ post.caption }}">
+                        {% else %}
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGIPsaM2kE0VHTFdEAdWEut7ssmNHGXJpz_2cNxCISBg&s=10" alt="No image">
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </main>
 {% endblock %}

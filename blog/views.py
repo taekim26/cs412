@@ -17,7 +17,7 @@ class ArticleView(DetailView):
     model = Article
     template_name = "blog/article.html"
     context_object_name = "article"
-
+ 
 class RandomArticleView(DetailView):
     '''display a single article selected at random'''
     model = Article
