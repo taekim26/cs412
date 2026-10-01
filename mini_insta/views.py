@@ -3,8 +3,10 @@
 # Description: class-based view for mini_insta application
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse
 from .models import Profile, Post, Photo
+from .forms import CreatePostForm
 
 # Create your views here.
 class ProfileListView(ListView):
@@ -25,3 +27,34 @@ class PostDetailView(DetailView):
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
 
+class CreatePostView(CreateView):
+    '''a view to handle creation of a new Post on a Profile'''
+    form_class = CreatePostForm
+    template_name = "mini_insta/create_post_form.html"
+
+    def get_context_data(self):
+        '''return the dictionary of context variables for use in the template'''
+        
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        context['profile'] = profile
+
+        return context
+
+    def form_valid(self, form):
+        '''handles the form submission and saves the new object to the Django database;
+            attach the Profile to the Post object before saving it to the database.'''
+        
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        form.instance.profile = profile
+
+        response = super().form_valid(form)
+
+        # create the Photo for the saved Post
+        image_url = self.request.POST['image_url']
+        if image_url:
+            Photo.objects.create(post=self.object, image_url=image_url)
+
+        return response

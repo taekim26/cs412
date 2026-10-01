@@ -3,6 +3,7 @@
 # Description: data model for mini_insta application
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Profile(models.Model):
@@ -40,6 +41,11 @@ class Post(models.Model):
         photos = Photo.objects.filter(post=self)
 
         return photos
+
+    def get_absolute_url(self):
+        '''return the URL to display one instance of this model'''
+
+        return reverse('show_post', kwargs={'pk': self.pk})
 
 class Photo(models.Model):
     '''Encapsulates the data of a mini_insta Photo of the Post'''

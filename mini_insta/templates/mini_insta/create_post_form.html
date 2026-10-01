@@ -1,0 +1,32 @@
+<!-- mini_insta/templates/mini_insta/create_post_form.html -->
+<!-- file: create_post_form.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026 -->
+<!-- description: shows form to create a new post -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main class="create-post">
+    <h1>Create a Post</h1>
+
+    <form action="{% url 'create_post' profile.pk %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Caption:</td>
+                <td>{{ form.caption }}</td>
+            </tr>
+            <tr>
+                <td>Image URL:</td>
+                <td><input type="url" name="image_url"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" name="submit" value="Submit">
+                    <a href="{% url 'show_profile' profile.pk %}">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</main>
+{% endblock %}
