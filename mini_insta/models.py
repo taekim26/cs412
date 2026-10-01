@@ -34,7 +34,7 @@ class Post(models.Model):
 
     def __str__(self):
         '''return a string representation of this model instance'''
-        return f'{self.profile}: {self.caption}'
+        return f'{self.caption}'
 
     def get_all_photos(self):
         '''return a QuerySet of photos about this post'''
@@ -53,7 +53,19 @@ class Photo(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
     image_url = models.URLField(blank=False)
+    image_file = models.ImageField(blank=True)
 
     def __str__(self):
         '''return a string representation of this model instance'''
-        return f'{self.post}'
+        if self.image_url:
+            return f'Photo {self.pk} of {self.post} (url: {self.image_url})'
+        else:
+            return f'Photo {self.pk} of {self.post} (file: {self.image_file})'
+
+    def get_image_url(self):
+        '''return the URL to the image;
+        URL either in the image_url attribute or image_file attribute as image_file.url'''
+        if self.image_url:
+            return self.image_url
+        else:
+            return self.image_file.url
