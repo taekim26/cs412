@@ -16,7 +16,13 @@ class Profile(models.Model):
 
     def __str__(self):
         '''return a string representation of this model instance'''
-        return f'"{self.username}"\'s profile info: {self.display_name}, {self.join_date}'
+        return f'{self.username}'
+
+    def get_all_posts(self):
+        '''return a QuerySet of posts about this profile'''
+        posts = Post.objects.filter(profile=self)
+
+        return posts
 
 class Post(models.Model):
     '''Encapsulates the data of a mini_insta Post of the user'''
@@ -27,7 +33,13 @@ class Post(models.Model):
 
     def __str__(self):
         '''return a string representation of this model instance'''
-        return f'{self.profile} created on {self.timestamp}'
+        return f'{self.profile}: {self.caption}'
+
+    def get_all_photos(self):
+        '''return a QuerySet of photos about this post'''
+        photos = Photo.objects.filter(post=self)
+
+        return photos
 
 class Photo(models.Model):
     '''Encapsulates the data of a mini_insta Photo of the Post'''
@@ -38,4 +50,4 @@ class Photo(models.Model):
 
     def __str__(self):
         '''return a string representation of this model instance'''
-        return f'{self.post}\'s photo uploaded on {self.timestamp}'
+        return f'{self.post}'
