@@ -18,3 +18,24 @@ class Profile(models.Model):
         '''return a string representation of this model instance'''
         return f'"{self.username}"\'s profile info: {self.display_name}, {self.join_date}'
 
+class Post(models.Model):
+    '''Encapsulates the data of a mini_insta Post of the user'''
+    # data attributes of the Post object
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    caption = models.TextField(blank=True)
+
+    def __str__(self):
+        '''return a string representation of this model instance'''
+        return f'{self.profile} created on {self.timestamp}'
+
+class Photo(models.Model):
+    '''Encapsulates the data of a mini_insta Photo of the Post'''
+    # data attributes of the Photo object
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    image_url = models.URLField(blank=False)
+
+    def __str__(self):
+        '''return a string representation of this model instance'''
+        return f'{self.post}\'s photo uploaded on {self.timestamp}'
