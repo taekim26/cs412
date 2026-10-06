@@ -39,6 +39,13 @@ class CreateArticleView(CreateView):
     form_class = CreateArticleForm
     template_name = "blog/create_article_form.html"
 
+    def form_valid(self, form):
+        # print out the form data
+        print(f'CreateArticleView.form_valid(): {form.cleaned_data}')
+
+        # delegate work to the superclass to do the rest
+        return super().form_valid(form)
+
 class CreateCommentView(CreateView):
     '''a view to handle creation of a new Comment on an Article'''
     form_class = CreateCommentForm
