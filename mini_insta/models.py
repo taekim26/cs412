@@ -21,7 +21,7 @@ class Profile(models.Model):
 
     def get_all_posts(self):
         '''return a QuerySet of posts about this profile'''
-        posts = Post.objects.filter(profile=self)
+        posts = Post.objects.filter(profile=self).order_by('timestamp')
 
         return posts
 
@@ -38,7 +38,7 @@ class Post(models.Model):
 
     def get_all_photos(self):
         '''return a QuerySet of photos about this post'''
-        photos = Photo.objects.filter(post=self)
+        photos = Photo.objects.filter(post=self).order_by('timestamp')
 
         return photos
 
