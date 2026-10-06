@@ -1,5 +1,5 @@
 # File: mini_insta/admin.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 09/26/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/06/2026
 # Description: admin for mini_insta application
 
 from django.contrib import admin

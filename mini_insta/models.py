@@ -1,5 +1,5 @@
 # File: mini_insta/models.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/06/2026
 # Description: data model for mini_insta application
 
 from django.db import models
