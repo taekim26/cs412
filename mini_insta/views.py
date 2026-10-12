@@ -1,5 +1,5 @@
 # File: mini_insta/views.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/11/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026
 # Description: class-based view for mini_insta application
 
 from django.shortcuts import render

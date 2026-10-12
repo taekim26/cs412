@@ -1,5 +1,5 @@
 # File: mini_insta/models.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/11/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026
 # Description: data model for mini_insta application
 
 from django.db import models
@@ -82,6 +82,14 @@ class Post(models.Model):
         '''return the URL to display one instance of this model'''
         return reverse('show_post', kwargs={'pk': self.pk}) 
 
+    def get_all_comments(self):
+        '''return a QuerySet of comments of this Post'''
+        return Comment.objects.filter(post=self).order_by('timestamp')
+
+    def get_likes(self):
+        '''return a QuerySet of likes of this Post'''
+        return Like.objects.filter(post=self)
+
 class Photo(models.Model):
     '''Encapsulates the data of a mini_insta Photo of the Post'''
     # data attributes of the Photo object
@@ -117,3 +125,26 @@ class Follow(models.Model):
     def __str__(self):
         '''return a string representation of this model instance'''
         return f'{self.follower_profile.display_name} follows {self.profile.display_name}'
+
+class Comment(models.Model):
+    '''Encapsulates the idea of one Profile providing a comment on a Post'''
+    # data attributes of the Comment object
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=True)
+
+    def __str__(self):
+        '''return a string representation of this model instance'''
+        return f'{self.text} by {self.profile.username}'
+
+class Like(models.Model):
+    '''Encapsulates the idea of one Profile providing approval of a Post'''
+    # data attributes of the Like object
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        '''return a string representation of this model instance'''
+        return f'{self.profile.username} liked {self.post.caption}'
