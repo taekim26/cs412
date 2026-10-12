@@ -1,5 +1,5 @@
 /* File: static/styles-mini-insta.css */
-/* Author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026 */
+/* Author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 */
 /* Description: CSS for mini-insta application; this CSS was derived from styles-blog example from CS412 lecture */
 
 * {
@@ -45,7 +45,7 @@ header h1 {
    PAGE TITLE
    ================================================== */
 
-/* Showing All Profiles */
+/* Showing All Profiles / Followers / Following */
 
 .page-title {
     margin: 0;
@@ -53,6 +53,13 @@ header h1 {
 
     font-size: 48px;
     color: black;
+}
+
+/* @username link inside the followers / following titles */
+
+.page-title a {
+    color: black;
+    text-decoration: none;
 }
 
 
@@ -180,10 +187,10 @@ footer {
 /*
    display name
 
-   profile picture = 220px
-   gap = 60px
+   profile picture = 150px
+   gap = 80px
 
-   220 + 60 = 280px
+   150 + 80 = 230px
 
    This aligns the display name with
    the first stat box.
@@ -192,12 +199,12 @@ footer {
 .profile > h2 {
     text-align: left;
 
-    font-size: 46px;
+    font-size: 32px;
 
     margin-top: 20px;
     margin-right: 0;
-    margin-bottom: 30px;
-    margin-left: 280px;
+    margin-bottom: 20px;
+    margin-left: 230px;
 }
 
 
@@ -211,22 +218,22 @@ footer {
     display: flex;
     align-items: center;
 
-    gap: 60px;
+    gap: 80px;
 
     margin-bottom: 30px;
 }
 
 
-/* circular profile picture */
+/* circular profile picture, thin purple border */
 
 .profile-picture {
-    width: 220px;
-    height: 220px;
+    width: 150px;
+    height: 150px;
 
     object-fit: cover;
 
     border-radius: 50%;
-    border: 3px solid #b84cff;
+    border: 1px solid #b84cff;
 
     flex-shrink: 0;
 }
@@ -241,7 +248,7 @@ footer {
 .stats {
     display: flex;
 
-    gap: 20px;
+    gap: 10px;
 
     flex: 1;
 }
@@ -250,37 +257,45 @@ footer {
 /* individual stat box */
 
 .stat {
-    width: 210px;
-    min-height: 190px;
+    width: 200px;
+    min-height: 95px;
 
-    padding: 25px;
+    padding: 14px;
 
     background: #f5f3ff;
 
-    border-left: 6px solid #b84cff;
-    border-radius: 10px;
+    border-left: 3px solid #b84cff;
+    border-radius: 8px;
 
-    font-size: 30px;
+    font-size: 20px;
 }
 
 
-/* TBD / number */
+/* number */
 
 .stat strong {
     display: block;
 
-    font-size: 32px;
+    font-size: 20px;
 
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 
 /* posts / followers / following */
 
 .stat p {
-    margin: 10px 0 0;
+    margin: 0;
 
-    font-size: 30px;
+    font-size: 20px;
+}
+
+
+/* followers / following boxes link to their pages */
+
+.stat a {
+    color: black;
+    text-decoration: none;
 }
 
 
@@ -427,6 +442,7 @@ footer {
     margin: 0;
 }
 
+
 /* ==================================================
    FORM PAGES (update post, update profile, etc.)
    ================================================== */
@@ -504,6 +520,23 @@ footer {
 
     padding: 8px 20px;
 }
+
+
+/* current post shown under the update post form */
+
+.current-post {
+    margin-top: 40px;
+    padding-top: 20px;
+
+    border-top: 1px solid #dddddd;
+}
+
+.current-post h2 {
+    margin: 0 0 20px;
+
+    font-size: 36px;
+}
+
 
 /* ==================================================
    NAVIGATION

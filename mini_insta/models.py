@@ -27,8 +27,39 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         '''return the URL to display one instance of this model'''
-
         return reverse('show_profile', kwargs={'pk': self.pk})
+
+    def get_followers(self):
+        '''return a list of those Profiles who are followers of this profile'''
+        follows = Follow.objects.filter(profile=self)
+        # in list format
+        followers = []
+        for follow in follows:
+            followers.append(follow.follower_profile)
+
+        return followers
+
+    def get_num_followers(self):
+        '''return the count of followers'''
+        return Follow.objects.filter(profile=self).count()
+
+    def get_following(self):
+        '''return a list of those Profiles followed by this profile'''
+        follows = Follow.objects.filter(follower_profile=self)
+        # in list format
+        following = []
+        for follow in follows:
+            following.append(follow.profile)
+
+        return following 
+
+    def get_num_following(self):
+        '''return the count of how many profiles are being followed'''
+        return Follow.objects.filter(follower_profile=self).count()
+
+    def get_num_posts(self):
+        '''return the count of Posts made by this Profile'''
+        return Post.objects.filter(profile=self).count()
 
 class Post(models.Model):
     '''Encapsulates the data of a mini_insta Post of the user'''
@@ -49,8 +80,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         '''return the URL to display one instance of this model'''
-
-        return reverse('show_post', kwargs={'pk': self.pk})
+        return reverse('show_post', kwargs={'pk': self.pk}) 
 
 class Photo(models.Model):
     '''Encapsulates the data of a mini_insta Photo of the Post'''
@@ -74,3 +104,16 @@ class Photo(models.Model):
             return self.image_url
         else:
             return self.image_file.url
+
+class Follow(models.Model):
+    '''Encapsulates the idea of an edge connecting two nodes within the social network'''
+    # data attributes of the Follow object
+    # profile indicates which profile is being followed (publisher)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile")
+    # follower_profile indicates which profile is doing the following (subscriber)
+    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        '''return a string representation of this model instance'''
+        return f'{self.follower_profile.display_name} follows {self.profile.display_name}'

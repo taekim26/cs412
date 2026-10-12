@@ -34,7 +34,6 @@ class CreatePostView(CreateView):
  
     def get_context_data(self):
         '''return the dictionary of context variables for use in the template'''
-        
         context = super().get_context_data()
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
@@ -45,7 +44,6 @@ class CreatePostView(CreateView):
     def form_valid(self, form):
         '''handles the form submission and saves the new object to the Django database;
             attach the Profile to the Post object before saving it to the database.'''
-        
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
         form.instance.profile = profile
@@ -63,14 +61,12 @@ class CreatePostView(CreateView):
 
 class UpdateProfileView(UpdateView):
     '''view class to handle update of a profile based on its PK'''
-
     model = Profile 
     form_class = UpdateProfileForm
     template_name = "mini_insta/update_profile_form.html"
 
 class DeletePostView(DeleteView):
     '''view class to delete a post on a Profile'''
-
     model = Post 
     template_name = "mini_insta/delete_post_form.html"
 
@@ -89,12 +85,22 @@ class DeletePostView(DeleteView):
 
     def get_success_url(self):
         '''provide a URL to redirect to after successfully deleting a post'''
-
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
 
 class UpdatePostView(UpdateView):
     '''view class to handle update of a post based on its PK'''
-
     model = Post
     form_class = UpdatePostForm 
     template_name = "mini_insta/update_post_form.html"
+
+class ShowFollowersDetailVeiw(DetailView):
+    '''display followers information'''
+    model = Profile
+    template_name = "mini_insta/show_followers.html"
+    context_object_name = "profile"
+
+class ShowFollowingDetailView(DetailView):
+    '''display following information'''
+    model = Profile 
+    template_name = "mini_insta/show_following.html"
+    context_object_name = "profile"

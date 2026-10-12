@@ -19,18 +19,22 @@
         
         <div class="stats">
             <div class="stat">
-                <strong>TBD</strong>
+                <strong>{{profile.get_num_posts}}</strong>
                 <p>posts</p>
             </div>
 
             <div class="stat">
-                <strong>TBD</strong>
-                <p>followers</p>
+                <strong>{{profile.get_num_followers}}</strong>
+                <a href="{% url 'show_followers' profile.pk %}">
+                    followers
+                </a>
             </div>
 
             <div class="stat">
-                <strong>TBD</strong>
-                <p>following</p>
+                <strong>{{profile.get_num_following}}</strong>
+                <a href="{% url 'show_following' profile.pk %}">
+                    following
+                </a>
             </div>
         </div>
     </div>

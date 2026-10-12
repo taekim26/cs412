@@ -1,0 +1,28 @@
+<!-- mini_insta/templates/mini_insta/show_followers.html -->
+<!-- file: show_followers.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 -->
+<!-- description: retrieve the required lists of Profiles to display -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1 class="page-title">
+    <a href="{% url 'show_profile' profile.pk %}">@{{profile.username}}</a>'s Followers
+</h1>
+
+<main class="grid-container">
+    {% if profile.get_num_followers > 0 %}
+        {% for follower in profile.get_followers %}
+            <div class="profile-card">
+                <a href="{% url 'show_profile' follower.pk %}">
+                    <img src="{{follower.profile_image_url}}" alt="{{follower.display_name}}">
+                </a>
+                <h2>{{follower.display_name}}</h2>
+                <p>@{{follower.username}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No followers yet!</p>
+    {% endif %}
+</main>
+{% endblock %}
