@@ -694,3 +694,24 @@ nav .profile-icon {
 
     font-size: 20px;
 }
+
+/* ==================================================
+   SEARCH PAGES
+   ================================================== */
+
+.search-results {
+    padding: 20px 30px;
+}
+
+.search-results h2 {
+    margin: 20px 0;
+
+    font-size: 36px;
+}
+
+/* the profile grid already has its own padding, so pull it back to the same edge */
+
+.search-results .grid-container {
+    margin: 0;
+    padding: 0;
+}

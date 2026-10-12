@@ -1,6 +1,6 @@
 <!-- mini_insta/templates/mini_insta/base.html -->
 <!-- file: base.html -->
-<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/06/2026 -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 -->
 <!-- description: base html for the overall structure of the templates -->
 
 {% load static %}
@@ -33,6 +33,9 @@
                             <a href="{% url 'create_post' profile.pk %}">Create Post</a>
                         </li>
                         <li>
+                            <a href="{% url 'search' profile.pk %}">Search</a>
+                        </li>
+                        <li>
                             <a href="{% url 'show_profile' profile.pk %}">Profile</a>
                         </li>
                     {% elif post %}
@@ -41,6 +44,9 @@
                         </li>
                         <li>
                             <a href="{% url 'create_post' post.profile.pk %}">Create Post</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'search' post.profile.pk %}">Search</a>
                         </li>
                         <li>
                             <a href="{% url 'show_profile' post.profile.pk %}">Profile</a>

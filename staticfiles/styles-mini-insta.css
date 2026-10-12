@@ -1,5 +1,5 @@
 /* File: static/styles-mini-insta.css */
-/* Author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026 */
+/* Author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 */
 /* Description: CSS for mini-insta application; this CSS was derived from styles-blog example from CS412 lecture */
 
 * {
@@ -45,7 +45,7 @@ header h1 {
    PAGE TITLE
    ================================================== */
 
-/* Showing All Profiles */
+/* Showing All Profiles / Followers / Following */
 
 .page-title {
     margin: 0;
@@ -53,6 +53,13 @@ header h1 {
 
     font-size: 48px;
     color: black;
+}
+
+/* @username link inside the followers / following titles */
+
+.page-title a {
+    color: black;
+    text-decoration: none;
 }
 
 
@@ -180,10 +187,10 @@ footer {
 /*
    display name
 
-   profile picture = 220px
-   gap = 60px
+   profile picture = 150px
+   gap = 80px
 
-   220 + 60 = 280px
+   150 + 80 = 230px
 
    This aligns the display name with
    the first stat box.
@@ -192,12 +199,12 @@ footer {
 .profile > h2 {
     text-align: left;
 
-    font-size: 46px;
+    font-size: 32px;
 
     margin-top: 20px;
     margin-right: 0;
-    margin-bottom: 30px;
-    margin-left: 280px;
+    margin-bottom: 20px;
+    margin-left: 230px;
 }
 
 
@@ -211,22 +218,22 @@ footer {
     display: flex;
     align-items: center;
 
-    gap: 60px;
+    gap: 80px;
 
     margin-bottom: 30px;
 }
 
 
-/* circular profile picture */
+/* circular profile picture, thin purple border */
 
 .profile-picture {
-    width: 220px;
-    height: 220px;
+    width: 150px;
+    height: 150px;
 
     object-fit: cover;
 
     border-radius: 50%;
-    border: 3px solid #b84cff;
+    border: 1px solid #b84cff;
 
     flex-shrink: 0;
 }
@@ -241,7 +248,7 @@ footer {
 .stats {
     display: flex;
 
-    gap: 20px;
+    gap: 10px;
 
     flex: 1;
 }
@@ -250,37 +257,45 @@ footer {
 /* individual stat box */
 
 .stat {
-    width: 210px;
-    min-height: 190px;
+    width: 200px;
+    min-height: 95px;
 
-    padding: 25px;
+    padding: 14px;
 
     background: #f5f3ff;
 
-    border-left: 6px solid #b84cff;
-    border-radius: 10px;
+    border-left: 3px solid #b84cff;
+    border-radius: 8px;
 
-    font-size: 30px;
+    font-size: 20px;
 }
 
 
-/* TBD / number */
+/* number */
 
 .stat strong {
     display: block;
 
-    font-size: 32px;
+    font-size: 20px;
 
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 
 /* posts / followers / following */
 
 .stat p {
-    margin: 10px 0 0;
+    margin: 0;
 
-    font-size: 30px;
+    font-size: 20px;
+}
+
+
+/* followers / following boxes link to their pages */
+
+.stat a {
+    color: black;
+    text-decoration: none;
 }
 
 
@@ -406,7 +421,7 @@ footer {
 }
 
 
-/* caption and timestamp */
+/* caption, likes, and timestamp */
 
 .post-info {
     margin-top: 30px;
@@ -419,12 +434,141 @@ footer {
     margin: 0 0 10px;
 }
 
+.likes {
+    font-size: 20px;
+    font-weight: bold;
+
+    margin: 0 0 10px;
+}
 
 .timestamp {
     font-size: 18px;
     color: #666;
 
     margin: 0;
+}
+
+
+/* comments below the caption */
+
+.comments {
+    margin-top: 30px;
+}
+
+.comments h3 {
+    margin: 0 0 15px;
+
+    font-size: 24px;
+}
+
+.comment {
+    margin-bottom: 15px;
+}
+
+.comment-text {
+    font-size: 20px;
+
+    margin: 0 0 4px;
+}
+
+.comment-text a {
+    color: black;
+    text-decoration: none;
+}
+
+
+/* ==================================================
+   FORM PAGES (update post, update profile, etc.)
+   ================================================== */
+
+.form-page {
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+
+.form-page h1 {
+    margin: 0 0 20px;
+
+    font-size: 48px;
+    color: black;
+}
+
+
+/* labels */
+
+.form-page td {
+    vertical-align: top;
+
+    padding: 8px 15px 8px 0;
+
+    font-size: 24px;
+}
+
+
+/* every text field: textarea + the URL input */
+
+.form-page textarea,
+.form-page input[type="text"],
+.form-page input[type="url"] {
+    width: 100%;
+    min-width: 500px;
+    max-width: 700px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+
+    padding: 10px;
+
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+}
+
+
+/* caption / bio boxes */
+
+.form-page textarea {
+    min-height: 150px;
+}
+
+
+/* display name is a short single line, not a big box */
+
+#id_display_name {
+    min-height: 0;
+    height: 50px;
+
+    resize: none;
+}
+
+
+/* Update / Cancel buttons */
+
+.form-page form {
+    margin-top: 15px;
+}
+
+.form-page input[type="submit"] {
+    font-size: 20px;
+
+    padding: 8px 20px;
+}
+
+
+/* current post shown under the update post form */
+
+.current-post {
+    margin-top: 40px;
+    padding-top: 20px;
+
+    border-top: 1px solid #dddddd;
+}
+
+.current-post h2 {
+    margin: 0 0 20px;
+
+    font-size: 36px;
 }
 
 
@@ -445,13 +589,18 @@ nav {
 }
 
 
-/* remove default ul spacing */
+/* remove default ul spacing, put the links on one line */
 
 nav ul {
     margin: 0;
     padding: 0;
 
     list-style: none;
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
 }
 
 
@@ -470,4 +619,99 @@ nav img {
 nav .profile-icon {
     border-radius: 50%;
     border: 3px solid #b84cff;
+}
+
+
+/* ==================================================
+   POST FEED PAGE
+   ================================================== */
+
+/* single column, centered, like an Instagram feed */
+
+.feed {
+    max-width: 600px;
+
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+/* one post in the feed */
+
+.feed-post {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #dddddd;
+}
+
+
+/* profile image + name of the person who wrote the post */
+
+.feed-author {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+.feed-author p {
+    margin: 0;
+
+    color: #666;
+}
+
+.feed-author-picture {
+    width: 50px;
+    height: 50px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+    border: 1px solid #b84cff;
+}
+
+
+/* first photo, full width of the column */
+
+.feed-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* "Back to Profile" link under the feed title */
+
+.feed-back {
+    margin: 0;
+    padding: 0 30px;
+
+    font-size: 20px;
+}
+
+/* ==================================================
+   SEARCH PAGES
+   ================================================== */
+
+.search-results {
+    padding: 20px 30px;
+}
+
+.search-results h2 {
+    margin: 20px 0;
+
+    font-size: 36px;
+}
+
+/* the profile grid already has its own padding, so pull it back to the same edge */
+
+.search-results .grid-container {
+    margin: 0;
+    padding: 0;
 }

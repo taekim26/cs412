@@ -110,3 +110,57 @@ class ShowFeedView(DetailView):
     model = Profile
     template_name = "mini_insta/show_feed.html"
     context_object_name = "profile"
+
+class SearchView(ListView):
+    '''search feature to search user Profiles and Posts based on a text input'''
+    template_name = "mini_insta/search_results.html"
+    context_object_name = "post"
+
+    def dispatch(self, request, *args, **kwargs):
+        '''return search.html template is the query is absent;
+            return the superclass version of dispatch otherwise'''
+        if 'query' in self.request.GET:
+
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            profile = Profile.objects.get(pk=self.kwargs['pk'])
+            context = {"profile": profile}
+
+            return render(request, 'mini_insta/search.html', context)
+
+    def get_queryset(self):
+        '''return the Posts that contain the query'''
+        # this reads the search text out of the URL and puts in a variable called query
+        # the key 'query' comes from the name="query" attribute on the form's input in search.html
+        query = self.request.GET.get('query', '')
+
+        # used __icontains to make search NOT case sensitive
+        return Post.objects.filter(caption__icontains=query).order_by('-timestamp')
+
+    def get_context_data(self, **kwargs):
+        '''return the dictionary of context variables for use in the template'''
+        context = super().get_context_data(**kwargs)
+
+        query = self.request.GET.get('query', '')
+        context['query'] = query
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        context['posts'] = self.get_queryset()
+
+        profiles_username = Profile.objects.filter(username__icontains=query)
+        profiles_display_name = Profile.objects.filter(display_name__icontains=query)
+        profiles_bio_text = Profile.objects.filter(bio_text__icontains=query)
+
+        profiles = []
+        for match in profiles_username:
+            if match not in profiles:
+                profiles.append(match)
+        for match in profiles_display_name:
+            if match not in profiles:
+                profiles.append(match)
+        for match in profiles_bio_text:
+            if match not in profiles:
+                profiles.append(match)
+
+        context['profiles'] = profiles
+
+        return context

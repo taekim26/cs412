@@ -1,0 +1,50 @@
+<!-- mini_insta/templates/mini_insta/search_results.html -->
+<!-- file: search_results.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 -->
+<!-- description: present listings of results: Profile and Post that matches with the query -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1 class="page-title">Search results for "{{query}}"</h1>
+
+<main class="search-results">
+    <!-- matching profiles -->
+    <h2>Profiles</h2>
+    {% if profiles %}
+        <div class="grid-container">
+            {% for profile in profiles %}
+                <div class="profile-card">
+                    <a href="{% url 'show_profile' profile.pk %}">
+                        <img src="{{profile.profile_image_url}}" alt="{{profile.display_name}}">
+                    </a>
+                    <h2>{{profile.display_name}}</h2>
+                    <h2>@{{profile.username}}</h2>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No profiles match your search.</p>
+    {% endif %}
+
+    <!-- matching posts -->
+    <h2>Posts</h2>
+    {% if posts %}
+        <div class="posts-grid">
+            {% for post in posts %}
+                <div class="post">
+                    <a href="{% url 'show_post' post.pk %}">
+                        {% if post.get_all_photos %}
+                            <img src="{{post.get_all_photos.first.get_image_url}}" alt="{{post.caption}}">
+                        {% else %}
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGIPsaM2kE0VHTFdEAdWEut7ssmNHGXJpz_2cNxCISBg&s=10" alt="No image">
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No posts match your search.</p>
+    {% endif %}
+</main>
+{% endblock %}
