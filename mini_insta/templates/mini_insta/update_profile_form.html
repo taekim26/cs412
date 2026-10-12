@@ -6,28 +6,30 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-<h1>Update the Profile</h1>
+<main class="form-page">
+    <h1>Update Profile</h1>
+    
+    <form action="{% url 'update_profile' profile.pk %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Display name:</td>
+                <td>{{form.display_name}}</td>
+            </tr>
+            <tr>
+                <td>Profile image URL:</td>
+                <td>{{form.profile_image_url}}</td>
+            </tr>
+            <tr>
+                <td>Bio text:</td>
+                <td>{{form.bio_text}}</td>
+            </tr>
+        </table>
 
-<form action="{% url 'update_profile' profile.pk %}" method="POST">
-    {% csrf_token %}
-    <table>
-        <tr>
-            <td>Display name:</td>
-            <td>{{form.display_name}}</td>
-        </tr>
-        <tr>
-            <td>Profile image URL:</td>
-            <td>{{form.profile_image_url}}</td>
-        </tr>
-        <tr>
-            <td>Bio text:</td>
-            <td>{{form.bio_text}}</td>
-        </tr>
-    </table>
-
-    <input type="submit" name="submit" value="Update">
-</form>
-<form action="{% url 'show_profile' profile.pk %}" method="GET">
-    <input type="submit" value="Cancel">
-</form>
+        <input type="submit" name="submit" value="Update">
+    </form>
+    <form action="{% url 'show_profile' profile.pk %}" method="GET">
+        <input type="submit" value="Cancel">
+    </form>
+</main>
 {% endblock %}

@@ -427,6 +427,83 @@ footer {
     margin: 0;
 }
 
+/* ==================================================
+   FORM PAGES (update post, update profile, etc.)
+   ================================================== */
+
+.form-page {
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+
+.form-page h1 {
+    margin: 0 0 20px;
+
+    font-size: 48px;
+    color: black;
+}
+
+
+/* labels */
+
+.form-page td {
+    vertical-align: top;
+
+    padding: 8px 15px 8px 0;
+
+    font-size: 24px;
+}
+
+
+/* every text field: textarea + the URL input */
+
+.form-page textarea,
+.form-page input[type="text"],
+.form-page input[type="url"] {
+    width: 100%;
+    min-width: 500px;
+    max-width: 700px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+
+    padding: 10px;
+
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+}
+
+
+/* caption / bio boxes */
+
+.form-page textarea {
+    min-height: 150px;
+}
+
+
+/* display name is a short single line, not a big box */
+
+#id_display_name {
+    min-height: 0;
+    height: 50px;
+
+    resize: none;
+}
+
+
+/* Update / Cancel buttons */
+
+.form-page form {
+    margin-top: 15px;
+}
+
+.form-page input[type="submit"] {
+    font-size: 20px;
+
+    padding: 8px 20px;
+}
 
 /* ==================================================
    NAVIGATION
