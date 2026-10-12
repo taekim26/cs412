@@ -1,12 +1,12 @@
 # File: mini_insta/views.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/01/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/11/2026
 # Description: class-based view for mini_insta application
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
 from .models import Profile, Post, Photo
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm
 
 # Create your views here.
 class ProfileListView(ListView):
@@ -26,12 +26,12 @@ class PostDetailView(DetailView):
     model = Post 
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
-
+ 
 class CreatePostView(CreateView):
     '''a view to handle creation of a new Post on a Profile'''
     form_class = CreatePostForm
     template_name = "mini_insta/create_post_form.html"
-
+ 
     def get_context_data(self):
         '''return the dictionary of context variables for use in the template'''
         
@@ -60,3 +60,10 @@ class CreatePostView(CreateView):
             Photo.objects.create(post=self.object, image_file=file)
 
         return response
+
+class UpdateProfileView(UpdateView):
+    '''view class to handle update of a post based on its PK'''
+
+    model = Profile 
+    form_class = UpdateProfileForm
+    template_name = "mini_insta/update_profile_form.html"

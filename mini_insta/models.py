@@ -25,6 +25,11 @@ class Profile(models.Model):
 
         return posts
 
+    def get_absolute_url(self):
+        '''return the URL to display one instance of this model'''
+
+        return reverse('show_profile', kwargs={'pk': self.pk})
+
 class Post(models.Model):
     '''Encapsulates the data of a mini_insta Post of the user'''
     # data attributes of the Post object
