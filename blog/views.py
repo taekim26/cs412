@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse # reverse allows us to create a url from a url pattern name
-from .models import Article
-from .forms import CreateArticleForm, CreateCommentForm
+from .models import Article, Comment
+from .forms import CreateArticleForm, CreateCommentForm, UpdateArticleForm
 import random
 
 # Create your views here.
@@ -88,3 +88,28 @@ class CreateCommentView(CreateView):
 
         # delegate the work to the superclass method form_valid
         return super().form_valid(form)
+
+class UpdateArticleView(UpdateView):
+    '''view class to handle update of an article based on its PK'''
+
+    model = Article
+    form_class = UpdateArticleForm 
+    template_name = "blog/update_article_form.html"
+
+class DeleteCommentView(DeleteView):
+    '''view class to delete a comment on an Article'''
+
+    model = Comment
+    template_name = "blog/delete_comment_form.html"
+
+    def get_success_url(self):
+        '''return the URL to redirect to after a successful delete'''
+
+        # find the PK for this Comment
+        pk = self.kwargs['pk']
+        # find the Comment object
+        comment = Comment.objects.get(pk=pk)
+        # find the PK of the Article to which this commetn is associated
+        article = comment.article
+
+        return reverse('article', kwargs={'pk': article.pk})
