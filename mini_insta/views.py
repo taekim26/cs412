@@ -3,7 +3,7 @@
 # Description: class-based view for mini_insta application
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm
@@ -67,3 +67,27 @@ class UpdateProfileView(UpdateView):
     model = Profile 
     form_class = UpdateProfileForm
     template_name = "mini_insta/update_profile_form.html"
+
+class DeletePostView(DeleteView):
+    '''view class to delete a post on a Profile'''
+
+    model = Post 
+    template_name = "mini_insta/delete_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        '''return the dictionary of context variables for use in the template'''
+        context = super().get_context_data(**kwargs)
+        # reference to the Post to be deleted
+        post = self.object 
+        # Profile of the user who made the Post
+        profile = post.profile # profile is the FK that refers to Profile object
+        # add this post and profile into the context dict
+        context['post'] = post 
+        context['profile'] = profile
+
+        return context 
+
+    def get_success_url(self):
+        '''provide a URL to redirect to after successfully deleting a post'''
+
+        return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
