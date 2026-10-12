@@ -1,0 +1,70 @@
+<!-- mini_insta/templates/mini_insta/show_feed.html -->
+<!-- file: show_feed.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 -->
+<!-- description: display the post feed for a single Profile -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1 class="page-title">
+    <a href="{% url 'show_profile' profile.pk %}">@{{profile.username}}</a>'s Feed
+</h1>
+
+<main class="feed">
+    {% if profile.get_post_feed %}
+        {% for post in profile.get_post_feed %}
+            <div class="feed-post">
+                <!-- the author of the post -->
+                <div class="feed-author">
+                    <a href="{% url 'show_profile' post.profile.pk %}">
+                        <img class="feed-author-picture"
+                            src="{{post.profile.profile_image_url}}"
+                            alt="{{post.profile.display_name}}">
+                    </a>
+                    <div>
+                        <strong>{{post.profile.display_name}}</strong>
+                        <p>@{{post.profile.username}}</p>
+                    </div>
+                </div>
+
+                <!-- first photo of the post -->
+                 <a href="{% url 'show_post' post.pk %}">
+                    {% if post.get_all_photos %}
+                        <img class="feed-photo"
+                            src="{{post.get_all_photos.first.get_image_url}}"
+                            alt="{{post.caption}}">
+                    {% else %}
+                        <img class="feed-photo"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGIPsaM2kE0VHTFdEAdWEut7ssmNHGXJpz_2cNxCISBg&s=10" 
+                            alt="No image">
+                    {% endif %}
+                 </a>
+                 
+                <!-- likes, caption, and timestamp -->
+                 <p class="likes">{{post.get_likes.count}} likes</p>  
+                 <p class="caption"><strong>@{{post.profile.username}}</strong>{{post.caption}}</p>
+                 <p class="timestamp">{{post.timestamp}}</p>
+
+                <!-- comments -->
+                 <div class="comments">
+                    {% if post.get_all_comments %}
+                        {% for comment in post.get_all_comments %}
+                            <p class="comment-text">
+                                <strong>
+                                    <a href="{% url 'show_profile' comment.profile.pk}">@{{comment.profile.username}}</a>
+                                </strong>
+                                {{comment.text}}
+                            </p>
+                        {% endfor %}
+                    {% else %}
+                        <p>No comments yet!</p>
+                    {% endif %}
+                 </div>
+                 
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Your feed is empty. Follow others to see their posts here!</p>
+    {% endif %}
+</main>
+{% endblock %}

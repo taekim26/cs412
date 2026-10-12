@@ -61,6 +61,15 @@ class Profile(models.Model):
         '''return the count of Posts made by this Profile'''
         return Post.objects.filter(profile=self).count()
 
+    def get_post_feed(self):
+        '''return a QuerySet of Posts made by the Profiles this Profile follows'''
+        # list of publishers
+        following = self.get_following()
+        # filter Posts
+        posts = Post.objects.filter(profile__in=following).order_by('-timestamp')
+
+        return posts
+
 class Post(models.Model):
     '''Encapsulates the data of a mini_insta Post of the user'''
     # data attributes of the Post object
