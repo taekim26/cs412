@@ -5,7 +5,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse
-from .models import Profile, Post, Photo
+from .models import Profile, Post, Photo, Follow, Like
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.forms import UserCreationForm
@@ -34,6 +34,17 @@ class ProfileDetailView(DetailView):
     model = Profile
     template_name = "mini_insta/show_profile.html"
     context_object_name = "profile"
+
+    def get_context_data(self, **kwargs):
+        '''add whether the logged-in user follows this Profile'''
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            my_profile = Profile.objects.filter(user=self.request.user).first()
+            follows = Follow.objects.filter(profile=self.object, follower_profile=my_profile)
+            context['is_following'] = len(follows) > 0
+
+        return context
 
 class MyProfileDetailView(MiniInstaLoginRequiredMixin, DetailView):
     '''display the logged-in user's profile'''
@@ -81,15 +92,26 @@ class PostDetailView(DetailView):
     model = Post 
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
+
+    def get_context_data(self, **kwargs):
+        '''add whether the logged-in user liked this Post'''
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            my_profile = Profile.objects.filter(user=self.request.user).first()
+            likes = Like.objects.filter(post=self.object, profile=my_profile)
+            context['did_like'] = len(likes) > 0
+
+        return context
  
 class CreatePostView(MiniInstaLoginRequiredMixin, CreateView):
     '''a view to handle creation of a new Post on a Profile'''
     form_class = CreatePostForm
     template_name = "mini_insta/create_post_form.html"
  
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         '''return the dictionary of context variables for use in the template'''
-        context = super().get_context_data()
+        context = super().get_context_data(**kwargs)
         context['profile'] = self.get_logged_in_profile()
 
         return context
@@ -136,7 +158,46 @@ class UpdatePostView(MiniInstaLoginRequiredMixin, UpdateView):
     form_class = UpdatePostForm 
     template_name = "mini_insta/update_post_form.html"
 
-class ShowFollowersDetailVeiw(DetailView):
+class LikePostView(MiniInstaLoginRequiredMixin, TemplateView):
+    '''the logged-in user likes a Post'''
+    def dispatch(self, request, *args, **kwargs):
+        '''create a Like object, then show the Post's page'''
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        post = Post.objects.get(pk=self.kwargs['pk'])
+        my_profile = self.get_logged_in_profile()
+        likes = Like.objects.filter(post=post, profile=my_profile)
+        if len(likes) == 0:
+            # create like when it doesn't exists already
+            Like.objects.create(post=post, profile=my_profile)
+
+        context = {
+            'post': post,
+            'did_like': True
+        }
+
+        return render(request, 'mini_insta/show_post.html', context)
+
+class DeleteLikePostView(MiniInstaLoginRequiredMixin, TemplateView):
+    '''the logged-in user unliked a Post'''
+    def dispatch(self, request, *args, **kwargs):
+        '''delete the Like object, then show the Post's page'''
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        post = Post.objects.get(pk=self.kwargs['pk'])
+        my_profile = self.get_logged_in_profile()
+        Like.objects.filter(post=post, profile=my_profile).delete()
+
+        context = {
+            'post': post,
+            'did_like': False
+        }
+
+        return render(request, 'mini_insta/show_post.html', context)
+
+class ShowFollowersDetailView(DetailView):
     '''display followers information'''
     model = Profile
     template_name = "mini_insta/show_followers.html"
@@ -161,7 +222,7 @@ class ShowFeedView(MiniInstaLoginRequiredMixin, DetailView):
 class SearchView(MiniInstaLoginRequiredMixin, ListView):
     '''search feature to search user Profiles and Posts based on a text input'''
     template_name = "mini_insta/search_results.html"
-    context_object_name = "post"
+    context_object_name = "posts"
 
     def dispatch(self, request, *args, **kwargs):
         '''require login and return search.html template if the query is absent;
@@ -210,6 +271,47 @@ class SearchView(MiniInstaLoginRequiredMixin, ListView):
         context['profiles'] = profiles
 
         return context
+
+class FollowProfileView(MiniInstaLoginRequiredMixin, TemplateView):
+    '''the logged-in user follows another Profile'''
+
+    def dispatch(self, request, *args, **kwargs):
+        '''create a Follow object, then show the other Profile's page'''
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        other_profile = Profile.objects.get(pk=self.kwargs['pk'])
+        my_profile = self.get_logged_in_profile()
+        follows = Follow.objects.filter(profile=other_profile, follower_profile=my_profile)
+        if len(follows) == 0:
+            # create follow when it doesn't exists already
+            Follow.objects.create(profile=other_profile, follower_profile=my_profile)
+
+        context = {
+            'profile': other_profile,
+            'is_following': True
+        }
+
+        return render(request, 'mini_insta/show_profile.html', context)
+
+class DeleteFollowProfileView(MiniInstaLoginRequiredMixin, TemplateView):
+    '''the logged-in user unfollows another Profile'''
+
+    def dispatch(self, request, *args, **kwargs):
+        '''delete the Follow object, then show the other Profile's page'''
+        if not request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+
+        other_profile = Profile.objects.get(pk=self.kwargs['pk'])
+        my_profile = self.get_logged_in_profile()
+        Follow.objects.filter(profile=other_profile, follower_profile=my_profile).delete()
+
+        context = {
+            'profile': other_profile,
+            'is_following': False
+        }
+
+        return render(request, 'mini_insta/show_profile.html', context)
 
 class LogoutConfirmationView(TemplateView):
     '''display a logout confirmation page'''

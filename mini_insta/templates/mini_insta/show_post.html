@@ -27,7 +27,16 @@
     </div>
 
     <div class="post-info">
-        <p class="likes">{{post.get_likes.count}} likes</p>
+        <p class="likes">
+            {{post.get_likes.count}} likes
+            {% if request.user.is_authenticated and request.user != post.profile.user %}
+                {% if did_like %}
+                    <a href="{% url 'delete_like' post.pk %}">Unlike</a>
+                {% else %}
+                    <a href="{% url 'like' post.pk %}">Like</a>
+                {% endif %}
+            {% endif %}
+        </p>
         <p class="caption"><strong>@{{ post.profile.username }}</strong> {{ post.caption }}</p>
         <p class="timestamp">{{ post.timestamp }}</p>
     </div>
