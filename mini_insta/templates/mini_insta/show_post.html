@@ -1,6 +1,6 @@
 <!-- mini_insta/templates/mini_insta/show_post.html -->
 <!-- file: show_post.html -->
-<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/19/2026 -->
 <!-- description: shows a single post with its caption, timestamp, and photos -->
 
 {% extends 'mini_insta/base.html' %}
@@ -11,12 +11,14 @@
         <a href="{% url 'show_profile' post.profile.pk %}">@{{ post.profile.username }}</a>
     </h2>
 
-    <h3>
-        <a href="{% url 'delete_post' post.pk %}">delete</a>
-    </h3>
-    <h3>
-        <a href="{% url 'update_post' post.pk %}">update</a>
-    </h3>
+    {% if request.user == post.profile.user %}
+        <h3>
+            <a href="{% url 'delete_post' post.pk %}">delete</a>
+        </h3>
+        <h3>
+            <a href="{% url 'update_post' post.pk %}">update</a>
+        </h3>
+    {% endif %}
 
     <div class="post-photos">
         {% for photo in post.get_all_photos %}

@@ -51,7 +51,7 @@
                         {% for comment in post.get_all_comments %}
                             <p class="comment-text">
                                 <strong>
-                                    <a href="{% url 'show_profile' comment.profile.pk}">@{{comment.profile.username}}</a>
+                                    <a href="{% url 'show_profile' comment.profile.pk %}">@{{comment.profile.username}}</a>
                                 </strong>
                                 {{comment.text}}
                             </p>

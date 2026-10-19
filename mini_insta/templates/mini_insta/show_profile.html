@@ -1,6 +1,6 @@
 <!-- mini_insta/templates/mini_insta/show_profile.html -->
 <!-- file: show_profile.html -->
-<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/12/2026 -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/19/2026 -->
 <!-- description: list single selected profile -->
 
 {% extends 'mini_insta/base.html' %}
@@ -42,11 +42,13 @@
     <div class="bio">
         <p>{{ profile.bio_text }}</p>
     </div>
-    <div>
-        <h3>
-            <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
-        </h3>
-    </div>
+    {% if request.user == profile.user %}
+        <div>
+            <h3>
+                <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+            </h3>
+        </div>
+    {% endif %}
 
     <div class="posts">
         <h2>Posts</h2>
