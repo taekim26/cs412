@@ -3,7 +3,7 @@
 # Description: class-based view for mini_insta application
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
@@ -187,3 +187,7 @@ class SearchView(MiniInstaLoginRequiredMixin, ListView):
         context['profiles'] = profiles
 
         return context
+
+class LogoutConfirmationView(TemplateView):
+    '''display a logout confirmation page'''
+    template_name = "mini_insta/logged_out.html"

@@ -21,5 +21,6 @@ urlpatterns = [
     path('post/<int:pk>/update', UpdatePostView.as_view(), name="update_post"),
     # authorization-related URLs
     path('login/', auth_views.LoginView.as_view(template_name="mini_insta/login.html"), name="mini_insta_login"),
-    path('logout/', auth_views.LogoutView.as_view(next_page="show_all_profiles"), name="mini_insta_logout"),
+    path('logout_confirmation/', LogoutConfirmationView.as_view(), name="logout_confirmation"),
+    path('logout/', auth_views.LogoutView.as_view(next_page="logout_confirmation"), name="mini_insta_logout"),
 ]
