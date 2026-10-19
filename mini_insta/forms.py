@@ -1,5 +1,5 @@
 # File: mini_insta/forms.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/11/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/19/2026
 # Description: define the forms that we use for create/update/delete operations
 
 from django import forms
@@ -28,3 +28,12 @@ class UpdatePostForm(forms.ModelForm):
         '''associate this form with a model from our database'''
         model = Post 
         fields = ['caption']
+
+class CreateProfileForm(forms.ModelForm):
+    '''a form to add a new Profile to the database'''
+
+    class Meta:
+        '''associate this form with a model from our database'''
+        model = Profile
+        fields = ['username', 'display_name', 'bio_text', 'profile_image_url']
+

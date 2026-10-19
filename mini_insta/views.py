@@ -6,8 +6,10 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse
 from .models import Profile, Post, Photo
-from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # subclass of LoginRequiredMixin
 class MiniInstaLoginRequiredMixin(LoginRequiredMixin):
@@ -38,6 +40,37 @@ class MyProfileDetailView(MiniInstaLoginRequiredMixin, DetailView):
     model = Profile 
     template_name = "mini_insta/show_profile.html"
     context_object_name = "profile"
+
+    def get_object(self):
+        '''return the Profile of the logged-in user'''
+        return self.get_logged_in_profile()
+
+class CreateProfileView(CreateView):
+    '''handle creation of a new Profile and its User'''
+    form_class = CreateProfileForm
+    template_name = "mini_insta/create_profile_form.html"
+
+    def get_context_data(self, **kwargs):
+        '''return the dictionary of context variables for use in the template'''
+        context = super().get_context_data(**kwargs)
+        context['user_form'] = UserCreationForm()
+
+        return context
+
+    def form_valid(self, form):
+        '''create the User, log them in, and attach the User to the newly created Profile'''
+        user_form = UserCreationForm(self.request.POST)
+        user = user_form.save()
+        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+        form.instance.user = user
+
+        return super().form_valid(form)
+
+class UpdateProfileView(MiniInstaLoginRequiredMixin, UpdateView):
+    '''view class to handle update of a logged-in user's profile'''
+    model = Profile 
+    form_class = UpdateProfileForm
+    template_name = "mini_insta/update_profile_form.html"
 
     def get_object(self):
         '''return the Profile of the logged-in user'''
@@ -74,16 +107,6 @@ class CreatePostView(MiniInstaLoginRequiredMixin, CreateView):
             Photo.objects.create(post=self.object, image_file=file)
 
         return response
-
-class UpdateProfileView(MiniInstaLoginRequiredMixin, UpdateView):
-    '''view class to handle update of a logged-in user's profile'''
-    model = Profile 
-    form_class = UpdateProfileForm
-    template_name = "mini_insta/update_profile_form.html"
-
-    def get_object(self):
-        '''return the Profile of the logged-in user'''
-        return self.get_logged_in_profile()
 
 class DeletePostView(MiniInstaLoginRequiredMixin, DeleteView):
     '''view class to delete a post on a Profile'''
