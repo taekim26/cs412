@@ -1,0 +1,27 @@
+<!-- voter_analytics/templates/voter_analytics/graphs.html -->
+<!-- file: graphs.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/25/2026 -->
+<!-- description: displays various graphs generated from the views -->
+
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+{% include "voter_analytics/search.html" %}
+
+<div class="container card">
+    <h2>Voter Graphs</h2>
+
+    <div class="row graph">
+        {{graph_div_dob|safe}}
+    </div>
+
+    <div class="row graph">
+        {{graph_div_party|safe}}
+    </div>
+
+    <div class="row graph">
+        {{graph_div_election|safe}}
+    </div>
+</div>
+{% endblock %}

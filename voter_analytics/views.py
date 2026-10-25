@@ -7,6 +7,9 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from . models import Voter
 
+import plotly 
+import plotly.graph_objs as go
+
 # Create your views here.
 class VotersListView(ListView):
     '''view to display voter results'''
@@ -61,4 +64,68 @@ class VoterDetailView(DetailView):
     model = Voter 
     template_name = 'voter_analytics/voter_detail.html'
     context_object_name = 'v'
+
+class GraphsListView(VotersListView):
+    '''view to display graphs of aggregate voter data'''
+    template_name = 'voter_analytics/graphs.html'
+
+    def get_context_data(self, **kwargs):
+        '''provide context variables for use in the template'''
+        context = super().get_context_data(**kwargs)
+        voters = self.get_queryset()
+        n = voters.count()
+
+        # histogram: distribution of Voters by their year of birth
+        dob_counts = {} # dict
+        for v in voters:
+            year = v.dob.year
+            dob_counts[year] = dob_counts.get(year, 0) + 1
+
+        x = sorted(dob_counts)
+        y = [dob_counts[year] for year in x]
+
+        fig = go.Bar(x=x, y=y)
+        title_text = f'Voter distribution by Year of Birth (n={n})'
+        graph_div_dob = plotly.offline.plot({"data": [fig],
+                                             "layout_title_text": title_text},
+                                             auto_open=False,
+                                             output_type="div")
+        context['graph_div_dob'] = graph_div_dob
+
+        # pie chart: distribution of voters by party affiliation
+        party_counts = {} # dict
+        for v in voters:
+            party = v.party_affil.strip()
+            party_counts[party] = party_counts.get(party, 0) + 1
+
+        labels = list(party_counts.keys())
+        values = list(party_counts.values())
+
+        fig = go.Pie(labels=labels, values=values)
+        title_text = f'Voter distribution by Party Affiliation (n={n})'
+        graph_div_party = plotly.offline.plot({"data": fig,
+                                               "layout_title_text": title_text},
+                                               auto_open=False,
+                                               output_type="div")
+        context['graph_div_party'] = graph_div_party
+
+        # histogram: how many voted in each of the 5 elections
+        x = ['v20state', 'v21town', 'v21priamry', 'v22general', 'v23town']
+        y = [voters.filter(v20state=True).count(),
+             voters.filter(v21town=True).count(),
+             voters.filter(v21primary=True).count(),
+             voters.filter(v22general=True).count(),
+             voters.filter(v23town=True).count()]
+
+        fig = go.Bar(x=x, y=y)
+        title_text = f'Vote Count by Election (n={n})'
+        graph_div_election = plotly.offline.plot({"data": [fig],
+                                                  "layout_title_text": title_text},
+                                                  auto_open=False,
+                                                  output_type="div")
+        context['graph_div_election'] = graph_div_election
+
+        return context
+
+
         

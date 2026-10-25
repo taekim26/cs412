@@ -3,7 +3,7 @@
 <!-- author: Tae Yeung Kim (kimty@bu.edu), 10/25/2026 -->
 <!-- description: form to filter the voter listing -->
 
-<form action="{% url 'voters' %}">
+<form>
     <table>
         <tr>
             <th>Select Party Affiliation:</th>
@@ -61,5 +61,5 @@
         </tr>
     </table>
     <input type="submit" value="Submit">
-    <a class="button cancel" href="{% url 'voters' %}">Cancel</a>
+    <a class="button cancel" href="?">Cancel</a>
 </form>
