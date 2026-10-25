@@ -1,0 +1,43 @@
+<!-- voter_analytics/templates/voter_analytics/voter_detail.html -->
+<!-- file: voter_detail.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/25/2026 -->
+<!-- description: page to display single voter information -->
+
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+<div class="container detail">
+    <h2>{{v.first_name}} {{v.last_name}}</h2>
+
+    <table>
+        <tr>
+            <th>Address</th>
+            <td>
+                <a href="https://www.google.com/maps/search/?api=1&query={{v.addr_st_num}}+{{v.addr_st_name|urlencode}}+Newton+MA+{{v.addr_zip_code}}" target="_blank">
+                    {{v.addr_st_num}} {{v.addr_st_name}}
+                    {% if v.addr_apt_num %}
+                        , Apartment {{v.addr_apt_num}}
+                    {% endif %}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{v.dob|date:"M. j, Y"}}</td>
+        </tr>
+        <tr>
+            <th>Date of Registration</th>
+            <td>{{v.dor|date:"M. j, Y"}}</td>
+        </tr>
+        <tr>
+            <th>Party Affiliation</th>
+            <td>{{v.party_affil}}</td>
+        </tr>
+        <tr>
+            <th>Voter Score</th>
+            <td>{{v.voter_score}}</td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}

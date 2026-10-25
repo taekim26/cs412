@@ -1,0 +1,65 @@
+<!-- voter_analytics/templates/voter_analytics/search.html -->
+<!-- file: search.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 10/25/2026 -->
+<!-- description: form to filter the voter listing -->
+
+<form action="{% url 'voters' %}">
+    <table>
+        <tr>
+            <th>Select Party Affiliation:</th>
+            <td>
+                <select name="party">
+                    <option value="">Choose</option>
+                    {% for p in parties %}
+                        <option value="{{p}}" {% if request.GET.party == p %} selected {% endif %}>{{p}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Minimum Date of Birth:</th>
+            <td>
+                <select name="min_dob">
+                    <option value="">Choose</option>
+                    {% for y in years %}
+                        <option value="{{y}}" {% if request.GET.min_dob == y %} selected {% endif %}>{{y}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Maximum Date of Birth:</th>
+            <td>
+                <select name="max_dob">
+                    <option value="">Choose</option>
+                    {% for y in years %}
+                        <option value="{{y}}" {% if request.GET.max_dob == y %} selected {% endif %}>{{y}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Select Voter Score:</th>
+            <td>
+                <select name="voter_score">
+                    <option value="">Choose</option>
+                    {% for s in scores %}
+                        <option value="{{s}}" {% if request.GET.voter_score == s %} selected {% endif %}>{{s}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Previous Election Participation:</th>
+            <td>
+                <input type="checkbox" name="v20state" {% if 'v20state' in request.GET %} checked {% endif %}> v20state<br>
+                <input type="checkbox" name="v21town" {% if 'v21town' in request.GET %} checked {% endif %}> v21town<br>
+                <input type="checkbox" name="v21primary" {% if 'v21primary' in request.GET %} checked {% endif %}> v21primary<br>
+                <input type="checkbox" name="v22general" {% if 'v22general' in request.GET %} checked {% endif %}> v22general<br>
+                <input type="checkbox" name="v23town" {% if 'v23town' in request.GET %} checked {% endif %}> v23town<br>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Submit">
+    <a class="button cancel" href="{% url 'voters' %}">Cancel</a>
+</form>

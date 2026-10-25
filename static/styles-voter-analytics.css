@@ -1,0 +1,291 @@
+/* File: static/styles-voter-analytics.css */
+/* Author: Tae Yeung Kim (kimty@bu.edu), 10/25/2026 */
+/* Description: CSS for voter-analytics application */
+
+
+:root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --page: #f1f1f1;
+    --gray-100: #f6f6f6;
+    --gray-300: #d4d4d4;
+    --gray-600: #6b6b6b;
+    --radius: 14px;
+    --shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding-bottom: 40px;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    background: var(--page);
+}
+
+/* ---------- header & centered navigation ---------- */
+header {
+    text-align: center;
+    padding: 18px 30px 6px;
+}
+
+header h1 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gray-600);
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 48px;
+}
+
+nav a {
+    color: var(--black);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+nav a:hover { color: var(--gray-600); }
+
+a { color: var(--black); }
+a:hover { color: var(--gray-600); }
+
+/* ---------- rounded white cards (filter panel, results, graphs) ---------- */
+form,
+section,
+main,
+.card,
+.results,
+.graphs {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin: 24px 30px;
+    padding: 36px 48px;
+}
+
+/* a card inside a card should not double up */
+main form,
+main section,
+.card form,
+.card section {
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+}
+
+h2, h3 {
+    margin: 0 0 16px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: 2.6rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.result-count,
+.summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin: 0 0 24px;
+}
+
+/* ---------- filter form: label on the left, control on the right ---------- */
+form table {
+    width: 100%;
+    margin: 0 0 20px;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    font-size: inherit;
+}
+
+form th,
+form td {
+    background: none;
+    color: var(--black);
+    border: none;
+    padding: 0;
+    text-transform: none;
+    letter-spacing: normal;
+    vertical-align: middle;
+}
+
+form th,
+label {
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+form td { text-align: left; }
+
+form ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+select,
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 6px 10px;
+    min-width: 130px;
+    color: var(--black);
+    background: var(--white);
+    border: 1px solid var(--black);
+    border-radius: 6px;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+}
+
+input[type="checkbox"] {
+    accent-color: var(--black);
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+button,
+input[type="submit"],
+.button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 9px 24px;
+    margin-right: 8px;
+    color: var(--white);
+    background: var(--black);
+    border: 1px solid var(--black);
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.button:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+/* secondary action (e.g. Cancel) */
+.cancel,
+button[type="reset"],
+a.button.cancel {
+    background: var(--white);
+    color: var(--black);
+}
+
+.cancel:hover,
+button[type="reset"]:hover {
+    background: var(--black);
+    color: var(--white);
+}
+
+/* ---------- voter table ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+th {
+    text-align: left;
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 14px 16px;
+    border-bottom: 2px solid var(--black);
+}
+
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--gray-300);
+    vertical-align: top;
+}
+
+tbody tr:hover { background: var(--gray-100); }
+
+/* voter name link */
+td a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ---------- pagination ("Showing page 1 of N.  Next") ---------- */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin: 0 0 18px;
+}
+
+.pagination a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.pagination .current { color: var(--gray-600); }
+
+/* ---------- detail page & graphs ---------- */
+.detail,
+.voter-detail {
+    max-width: 680px;
+    margin: 24px auto;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 40px;
+}
+
+.detail th,
+.voter-detail th {
+    width: 40%;
+    border-bottom: 1px solid var(--gray-300);
+    font-size: 0.95rem;
+}
+
+.graph { margin-bottom: 28px; }
+
+/* ---------- small screens ---------- */
+@media (max-width: 700px) {
+    form, section, main, .card, .results, .graphs {
+        margin: 16px 12px;
+        padding: 22px 18px;
+    }
+    nav ul { gap: 22px; }
+    h2 { font-size: 1.9rem; }
+    th, td { padding: 8px; font-size: 0.82rem; }
+    .pagination { flex-wrap: wrap; gap: 10px; }
+}

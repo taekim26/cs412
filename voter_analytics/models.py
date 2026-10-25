@@ -1,3 +1,7 @@
+# File: voter_analytics/models.py
+# Author: Tae Yeung Kim (kimty@bu.edu), 10/25/2026
+# Description: data model for voter_analytics application
+
 from django.db import models
 
 # Create your models here.
