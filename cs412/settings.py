@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "blog", # blog app
     "mini_insta", # pa3/4/5/6: mini instagram app
     "marathon_analytics", # marathon analytics app
+    "voter_analytics", # pa7: voter analytics app
 ]
 
 MIDDLEWARE = [
