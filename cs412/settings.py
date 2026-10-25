@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "formdata", # form data app
     "restaurant", # pa2: restaurant app
     "blog", # blog app
-    "mini_insta", # pa3/4: mini instagram app
+    "mini_insta", # pa3/4/5/6: mini instagram app
+    "marathon_analytics", # marathon analytics app
 ]
 
 MIDDLEWARE = [
