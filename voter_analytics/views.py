@@ -57,6 +57,10 @@ class VotersListView(ListView):
         context['scores'] = ['0', '1', '2', '3', '4', '5']
         context['years'] = [str(date.year) for date in Voter.objects.dates('dob', 'year')]
 
+        params = self.request.GET.copy()
+        params.pop("page", None)
+        context['querystring'] = params.urlencode()
+        
         return context 
 
 class VoterDetailView(DetailView):

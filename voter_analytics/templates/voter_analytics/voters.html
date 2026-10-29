@@ -22,12 +22,12 @@
                 </li>
                 {% if page_obj.has_previous %}
                     <li>
-                        <span><a href="?{{request.GET.urlencode}}&page={{page_obj.previous_page_number}}">Previous Page</a></span>
+                        <span><a href="?{{querystring}}&page={{page_obj.previous_page_number}}">Previous Page</a></span>
                     </li>
                 {% endif %}
                 {% if page_obj.has_next %}
-                    <li>
-                        <span><a href="?{{request.GET.urlencode}}&page={{page_obj.next_page_number}}">Next Page</a></span>
+                    <li> 
+                        <span><a href="?{{querystring}}&page={{page_obj.next_page_number}}">Next Page</a></span>
                     </li>
                 {% endif %}
             </ul>
