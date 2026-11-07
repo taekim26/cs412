@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from django.urls import reverse
 from .models import Joke, Picture
+from rest_framework import generics
+from .serializers import *
 
 import random
 
@@ -45,3 +47,38 @@ class PictureDetailView(DetailView):
     model = Picture 
     template_name = 'dadjokes/picture.html'
     context_object_name = 'picture'
+
+# REST API views
+class JokeListAPIView(generics.ListCreateAPIView):
+    '''GET: list all jokes, POST: create a new joke'''
+    queryset = Joke.objects.all()
+    serializer_class = JokeSerializer
+
+class JokeDetailAPIView(generics.RetrieveAPIView):
+    '''GET: sinlge joke'''
+    queryset = Joke.objects.all()
+    serializer_class = JokeSerializer
+
+class RandomJokeAPIView(generics.RetrieveAPIView):
+    '''GET: single random joke'''
+    serializer_class = JokeSerializer
+
+    def get_object(self):
+        return random.choice(Joke.objects.all())
+
+class PictureListAPIView(generics.RetrieveAPIView):
+    '''GET: list all pictures'''
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+
+class PictureDetailAPIView(generics.RetrieveAPIView):
+    '''GET: single picture'''
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+
+class RandomPictureAPIView(generics.RetrieveAPIView):
+    '''GET: single random picture'''
+    serializer_class = PictureSerializer
+
+    def get_object(self):
+        return random.choice(Picture.objects.all())

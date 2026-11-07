@@ -12,4 +12,12 @@ urlpatterns = [
     path('joke/<int:pk>', JokeDetailView.as_view(), name='joke'),
     path('pictures', PictureListView.as_view(), name='pictures'),
     path('picture/<int:pk>', PictureDetailView.as_view(), name='picture'),
+    # REST API URLs
+    path('api/', RandomJokeAPIView.as_view()),
+    path('api/random', RandomJokeAPIView.as_view()),
+    path('api/jokes', JokeListAPIView.as_view()),
+    path('api/joke/<int:pk>', JokeDetailAPIView.as_view()),
+    path('api/pictures', PictureListAPIView.as_view()),
+    path('api/picture/<int:pk>', PictureDetailAPIView.as_view()),
+    path('api/random_picture', RandomPictureAPIView.as_view()),
 ]
