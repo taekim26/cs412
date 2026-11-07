@@ -66,7 +66,7 @@ class RandomJokeAPIView(generics.RetrieveAPIView):
     def get_object(self):
         return random.choice(Joke.objects.all())
 
-class PictureListAPIView(generics.RetrieveAPIView):
+class PictureListAPIView(generics.ListAPIView):
     '''GET: list all pictures'''
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer

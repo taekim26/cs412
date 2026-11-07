@@ -9,7 +9,7 @@ class JokeSerializer(serializers.ModelSerializer):
     '''a serializer for the Joke model'''
     class Meta:
         model = Joke 
-        fields = ['id' 'text', 'name', 'timestamp']
+        fields = ['id', 'text', 'name', 'timestamp']
 
 class PictureSerializer(serializers.ModelSerializer):
     '''a serializer for the Picture model'''
