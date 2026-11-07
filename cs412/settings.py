@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "mini_insta", # pa3/4/5/6: mini instagram app
     "marathon_analytics", # marathon analytics app
     "voter_analytics", # pa7: voter analytics app
+    "rest_framework", # Django REST framework
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,8 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/kimty/static/'
     MEDIA_URL = '/kimty/media/'
+
+REST_FRAMEWORK = {
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+  'PAGE_SIZE': 10
+}

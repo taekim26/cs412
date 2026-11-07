@@ -6,6 +6,8 @@ from .forms import CreateArticleForm, CreateCommentForm, UpdateArticleForm
 from django.contrib.auth.mixins import LoginRequiredMixin ## for authentication
 from django.contrib.auth.forms import UserCreationForm ## for new user
 from django.contrib.auth.models import User ## the Django user model 
+from rest_framework import generics
+from .serializers import *
 
 import random
 
@@ -149,3 +151,14 @@ class UserRegistrationView(CreateView):
 
         return reverse('login')
 
+class ArticleListAPIView(generics.ListCreateAPIView):
+  '''
+  An API view to return a listing of Articles 
+  and to create an Article.
+  '''
+  queryset = Article.objects.all()
+  serializer_class = ArticleSerializer
+ 
+class ArticleDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+  queryset = Article.objects.all()
+  serializer_class = ArticleSerializer
