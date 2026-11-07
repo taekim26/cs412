@@ -1,0 +1,18 @@
+<!-- dadjokes/templates/dadjokes/random.html -->
+<!-- file: random.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 11/07/2026 -->
+<!-- description: displays random joke and picture -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+<h1>Random Dad Jokes</h1>
+<div>
+    <p>"{{joke.text}}"</p>
+    <p><em>by {{joke.name}} at {{joke.timestamp}}</em></p>
+</div>
+<div>
+    <img src="{{picture.image_url}}">
+    <p><em>{{picture.name}} at {{picture.timestamp}}</em></p>
+</div>
+{% endblock %}

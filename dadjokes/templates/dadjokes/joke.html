@@ -1,0 +1,14 @@
+<!-- dadjokes/templates/dadjokes/joke.html -->
+<!-- file: joke.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 11/07/2026 -->
+<!-- description: displays single joke - text only -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+<h1>Joke {{joke.pk}}</h1>
+<div>
+    <p>"{{joke.text}}"</p>
+    <p><em>by {{joke.name}} at {{joke.timestamp}}</em></p>
+</div>
+{% endblock %}

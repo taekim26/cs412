@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "marathon_analytics", # marathon analytics app
     "voter_analytics", # pa7: voter analytics app
     "rest_framework", # Django REST framework
+    "dadjokes", # pa9: dadjokes app
 ]
 
 MIDDLEWARE = [

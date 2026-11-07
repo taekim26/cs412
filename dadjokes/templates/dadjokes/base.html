@@ -1,0 +1,28 @@
+<!-- dadjokes/templates/dadjokes/base.html -->
+<!-- file: base.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 11/07/2026 -->
+<!-- description: base html for the overall structure of the templates -->
+
+{% load static %}
+
+<html>
+    <head>
+        <title>Dad Jokes</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'random' %}">Random</a></li>
+            <li><a href="{% url 'jokes' %}">All Jokes</a></li>
+            <li><a href="{% url 'pictures' %}">All Pictures</a></li>
+        </nav>
+
+        <!-- page specific contents -->
+        {% block content %}
+        {% endblock %}
+
+        <footer>
+            <p>CS412 Assignment 9 Tae Yeung Kim</p>
+        </footer>
+    </body>
+</html>

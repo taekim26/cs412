@@ -1,0 +1,22 @@
+<!-- dadjokes/templates/dadjokes/pictures.html -->
+<!-- file: pictures.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 11/07/2026 -->
+<!-- description: displays all pictures - image only -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+<h1>All Pictures</h1>
+<div>
+    {% for p in pictures %}
+        <div>
+            <a href="{% url 'picture' p.pk %}">
+                <img src="{{p.image_url}}">
+            </a>
+            <p>
+                <em>by {{p.name}} at {{p.timestamp}}</em>
+            </p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

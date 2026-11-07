@@ -1,0 +1,14 @@
+<!-- dadjokes/templates/dadjokes/picture.html -->
+<!-- file: picture.html -->
+<!-- author: Tae Yeung Kim (kimty@bu.edu), 11/07/2026 -->
+<!-- description: displays single picture - image only -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+<h1>Picture {{picture.pk}}</h1>
+<div>
+    <img src="{{picture.image_url}}">
+    <p><em>{{picture.name}} at {{picture.timestamp}}</em></p>
+</div>
+{% endblock %}
