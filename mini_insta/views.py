@@ -369,3 +369,8 @@ class PostDetailAPIView(generics.RetrieveAPIView):
     '''GET: single post'''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+class PhotoListCreateAPIView(generics.ListCreateAPIView):
+    '''GET: list all photos, POST: create a new photo for a post'''
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer

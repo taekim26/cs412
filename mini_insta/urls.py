@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/posts', PostListCreateAPIView.as_view()),
     path('api/post/<int:pk>', PostDetailAPIView.as_view()),
     path('api/post/<int:pk>/photos', PostPhotosAPIView.as_view()),
+    path('api/photos', PhotoListCreateAPIView.as_view()),
 ]
