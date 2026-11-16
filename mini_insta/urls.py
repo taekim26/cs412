@@ -1,5 +1,5 @@
 # File: mini_insta/urls.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/19/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 11/15/2026
 # Description: URL patterns for the mini_insta application
 
 from django.urls import path
@@ -28,4 +28,12 @@ urlpatterns = [
     path('logout_confirmation/', LogoutConfirmationView.as_view(), name="logout_confirmation"),
     path('logout/', auth_views.LogoutView.as_view(next_page="logout_confirmation"), name="mini_insta_logout"),
     path('create_profile/', CreateProfileView.as_view(), name="create_profile"),
+    # REST API URLs
+    path('api/profiles', ProfileListAPIView.as_view()),
+    path('api/profile/<int:pk>', ProfileDetailAPIView.as_view()),
+    path('api/profile/<int:pk>/posts', ProfilePostsAPIView.as_view()),
+    path('api/profile/<int:pk>/feed', ProfileFeedAPIView.as_view()),
+    path('api/posts', PostListCreateAPIView.as_view()),
+    path('api/post/<int:pk>', PostDetailAPIView.as_view()),
+    path('api/post/<int:pk>/photos', PostPhotosAPIView.as_view()),
 ]

@@ -1,5 +1,5 @@
 # File: mini_insta/views.py
-# Author: Tae Yeung Kim (kimty@bu.edu), 10/19/2026
+# Author: Tae Yeung Kim (kimty@bu.edu), 11/15/2026
 # Description: class-based view for mini_insta application
 
 from django.shortcuts import render
@@ -10,6 +10,8 @@ from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProf
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from rest_framework import generics
+from .serializers import *
 
 # subclass of LoginRequiredMixin
 class MiniInstaLoginRequiredMixin(LoginRequiredMixin):
@@ -316,3 +318,54 @@ class DeleteFollowProfileView(MiniInstaLoginRequiredMixin, TemplateView):
 class LogoutConfirmationView(TemplateView):
     '''display a logout confirmation page'''
     template_name = "mini_insta/logged_out.html"
+
+# REST API views
+class ProfileListAPIView(generics.ListAPIView):
+    '''GET: list all profiles'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfileDetailAPIView(generics.RetrieveAPIView):
+    '''GET: single profile'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfilePostsAPIView(generics.ListAPIView):
+    '''GET: all posts of one profile'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        '''return a QuerySet of the posts of the profile whose pk is in the URL'''
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        return profile.get_all_posts() 
+
+class PostPhotosAPIView(generics.ListAPIView):
+    '''GET: all photos of one post'''
+    serializer_class = PhotoSerializer
+
+    def get_queryset(self):
+        '''return a QuerySet of the photos of the post whose pk is in the URL'''
+        post = Post.objects.get(pk=self.kwargs['pk'])
+
+        return post.get_all_photos()
+
+class ProfileFeedAPIView(generics.ListAPIView):
+    '''GET: feed for one profile'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        '''return a QuerySet of the posts made by the profiles that this profile follows'''
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        return profile.get_post_feed()
+
+class PostListCreateAPIView(generics.ListCreateAPIView):
+    '''GET: list all photos; POST: create a new post'''
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetailAPIView(generics.RetrieveAPIView):
+    '''GET: single post'''
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
