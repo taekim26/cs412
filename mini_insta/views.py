@@ -7,10 +7,17 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse
 from .models import Profile, Post, Photo, Follow, Like
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProfileForm
+from django.contrib.auth import authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status 
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .serializers import *
 
 # subclass of LoginRequiredMixin
@@ -320,18 +327,38 @@ class LogoutConfirmationView(TemplateView):
     template_name = "mini_insta/logged_out.html"
 
 # REST API views
+class UserLoginView(APIView):
+    '''POST: log in with username and pw, return the token and the profile id'''
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            profile = Profile.objects.get(user=user)
+
+            return Response({'token': token.key, 'profile_id': profile.id}, status=status.HTTP_200_OK)
+
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
 class ProfileListAPIView(generics.ListAPIView):
     '''GET: list all profiles'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
 class ProfileDetailAPIView(generics.RetrieveAPIView):
     '''GET: single profile'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
 class ProfilePostsAPIView(generics.ListAPIView):
     '''GET: all posts of one profile'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -342,6 +369,8 @@ class ProfilePostsAPIView(generics.ListAPIView):
 
 class PostPhotosAPIView(generics.ListAPIView):
     '''GET: all photos of one post'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PhotoSerializer
 
     def get_queryset(self):
@@ -352,6 +381,8 @@ class PostPhotosAPIView(generics.ListAPIView):
 
 class ProfileFeedAPIView(generics.ListAPIView):
     '''GET: feed for one profile'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -362,15 +393,21 @@ class ProfileFeedAPIView(generics.ListAPIView):
 
 class PostListCreateAPIView(generics.ListCreateAPIView):
     '''GET: list all photos; POST: create a new post'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 class PostDetailAPIView(generics.RetrieveAPIView):
     '''GET: single post'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 class PhotoListCreateAPIView(generics.ListCreateAPIView):
     '''GET: list all photos, POST: create a new photo for a post'''
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
